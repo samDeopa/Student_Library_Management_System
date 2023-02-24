@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "card")
@@ -13,19 +15,55 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id;//auto generated
 
     //it will auto time stamp when the entity is created
     @CreationTimestamp
-    private Date createdOn;
+    private Date createdOn;//auto generated
 
     //it will mark the time stamp when the entity id updated
     @UpdateTimestamp
-    private Date updateOn;
+    private Date updateOn;//auto generated
 
     @Enumerated(value =  EnumType.STRING)
     private CardStatus cardStatus;
+
+    @OneToOne
+    @JoinColumn
+    Student student;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    List<Book> booksIssued;
+
+    @OneToMany(mappedBy = "card", cascade =  CascadeType.ALL)
+    List<Transaction> ListOfTransactions =  new  ArrayList<>();
+
     public Card() {
+        booksIssued = new ArrayList<>();
+    }
+
+    public List<Book> getBooksIssued() {
+        return booksIssued;
+    }
+
+    public void setBooksIssued(List<Book> booksIssued) {
+        this.booksIssued = booksIssued;
+    }
+
+    public List<Transaction> getListOfTransactions() {
+        return ListOfTransactions;
+    }
+
+    public void setListOfTransactions(List<Transaction> listOfTransactions) {
+        ListOfTransactions = listOfTransactions;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public int getId() {
