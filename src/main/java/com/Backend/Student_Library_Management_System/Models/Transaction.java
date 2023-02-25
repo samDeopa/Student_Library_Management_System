@@ -12,7 +12,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private  int id;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private TransactionStatus transactionStatus;
     private String transactionId = UUID.randomUUID().toString();
     private Date transactionDate;
@@ -20,11 +20,11 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn
-    Book book;
+    private Book book;
 
     @ManyToOne
     @JoinColumn
-    Card card;
+    private Card card;
 
 
     public Transaction() {

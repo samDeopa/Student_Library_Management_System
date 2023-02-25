@@ -1,6 +1,7 @@
 package com.Backend.Student_Library_Management_System.Service;
 
 import com.Backend.Student_Library_Management_System.DTOs.IssueBookDto;
+import com.Backend.Student_Library_Management_System.DTOs.ReturnBookDto;
 import com.Backend.Student_Library_Management_System.Enum.CardStatus;
 import com.Backend.Student_Library_Management_System.Enum.TransactionStatus;
 import com.Backend.Student_Library_Management_System.Models.Book;
@@ -26,6 +27,7 @@ public class TransactionService {
 
     @Autowired
     CardRepository cardRepository;
+
     public String issueBook(IssueBookDto issueBookDto) {
         Book book = bookRepository.findById(issueBookDto.getBookId()).get();
         Card card = cardRepository.findById(issueBookDto.getCardId()).get();
@@ -41,6 +43,43 @@ public class TransactionService {
         transaction.setBook(book);
         transaction.setCard(card);
 
+        List<Book> booksIssued = card.getBooksIssued();
+        booksIssued.add(book) ;
+        card.setBooksIssued(booksIssued);
+
+        List<Transaction> bookTransactionList = book.getListOfTransactions();
+        bookTransactionList.add(transaction);
+        book.setListOfTransactions(bookTransactionList);
+
+
+
+        List<Transaction> cardTransactionList = card.getListOfTransactions();
+        cardTransactionList.add(transaction);
+        card.setListOfTransactions(cardTransactionList);
+
+        book.setIssued(true);
+
+        cardRepository.save(card);
+
+        return "Book issued Successfully";
+
+
+    }
+
+    public String returnBook(ReturnBookDto returnBookDto) {
+        Book book = bookRepository.findById(returnBookDto.getBookId()).get();
+        Card card= cardRepository.findById(returnBookDto.getCardId()).get();
+
+
+        Transaction transaction = new Transaction(TransactionStatus.SUCCESS, new Date(), false);
+        transaction.setCard(card);
+        transaction.setBook(book);
+        book.setIssued(false);
+
+        List<Book> booksIssued = card.getBooksIssued();
+        booksIssued.remove(book) ;
+        card.setBooksIssued(booksIssued);
+
         List<Transaction> bookTransactionList = book.getListOfTransactions();
         bookTransactionList.add(transaction);
         book.setListOfTransactions(bookTransactionList);
@@ -48,12 +87,9 @@ public class TransactionService {
         List<Transaction> cardTransactionList = card.getListOfTransactions();
         cardTransactionList.add(transaction);
         card.setListOfTransactions(cardTransactionList);
-        book.setIssued(true);
 
         cardRepository.save(card);
-
-        return "Book issued Successfully";
-
+        return ("Book returned Successfully");
 
     }
 }

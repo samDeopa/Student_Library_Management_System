@@ -1,6 +1,7 @@
 package com.Backend.Student_Library_Management_System.Controller;
 
 import com.Backend.Student_Library_Management_System.DTOs.IssueBookDto;
+import com.Backend.Student_Library_Management_System.DTOs.ReturnBookDto;
 import com.Backend.Student_Library_Management_System.Models.Transaction;
 import com.Backend.Student_Library_Management_System.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,10 @@ public class TransactionController {
     @PostMapping("/issueBook")
     public  String issueBook(@RequestBody IssueBookDto issueBookDto){
         return  transactionService.issueBook(issueBookDto);
+    }
+
+    @PostMapping("/returnBook")
+    public  String returnBook(@RequestBody ReturnBookDto returnBookDto){
+        return  transactionService.returnBook(returnBookDto);
     }
 }

@@ -33,13 +33,13 @@ public class Card {
     Student student;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
-    List<Book> booksIssued;
+    List<Book> booksIssued= new ArrayList<>();;
 
     @OneToMany(mappedBy = "card", cascade =  CascadeType.ALL)
-    List<Transaction> ListOfTransactions =  new  ArrayList<>();
+    List<Transaction> listOfTransactions =  new  ArrayList<>();
 
     public Card() {
-        booksIssued = new ArrayList<>();
+
     }
 
     public List<Book> getBooksIssued() {
@@ -51,11 +51,11 @@ public class Card {
     }
 
     public List<Transaction> getListOfTransactions() {
-        return ListOfTransactions;
+        return listOfTransactions;
     }
 
     public void setListOfTransactions(List<Transaction> listOfTransactions) {
-        ListOfTransactions = listOfTransactions;
+        this.listOfTransactions = listOfTransactions;
     }
 
     public Student getStudent() {
