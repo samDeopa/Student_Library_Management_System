@@ -17,12 +17,12 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping("/issueBook")
-    public  String issueBook(@RequestBody IssueBookDto issueBookDto){
+    public  String issueBook(@RequestBody IssueBookDto issueBookDto) throws Exception {
         return  transactionService.issueBook(issueBookDto);
     }
 
     @PostMapping("/returnBook")
-    public  String returnBook(@RequestBody ReturnBookDto returnBookDto){
+    public  String returnBook(@RequestBody ReturnBookDto returnBookDto) throws Exception {
         return  transactionService.returnBook(returnBookDto);
     }
 }
