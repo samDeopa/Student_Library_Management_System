@@ -5,10 +5,9 @@ import com.Backend.Student_Library_Management_System.DTOs.ReturnBookDto;
 import com.Backend.Student_Library_Management_System.Models.Transaction;
 import com.Backend.Student_Library_Management_System.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -24,5 +23,9 @@ public class TransactionController {
     @PostMapping("/returnBook")
     public  String returnBook(@RequestBody ReturnBookDto returnBookDto) throws Exception {
         return  transactionService.returnBook(returnBookDto);
+    }
+    @GetMapping("/getTransactions")
+    public List<String> getTransactions(@RequestParam int cardId, @RequestParam int bookId){
+        return  transactionService.getTransactions( bookId,cardId);
     }
 }

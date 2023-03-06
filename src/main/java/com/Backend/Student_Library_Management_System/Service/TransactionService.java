@@ -15,6 +15,7 @@ import com.Backend.Student_Library_Management_System.Repository.TransactionRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -189,14 +190,19 @@ public class TransactionService {
     }
 
 
-//    public String getTransactions(int bookId,int cardId){
-//
-//        List<Transaction> transactionsList = transactionRepository.getTransactionsForBookAndCard(bookId,cardId);
-//
-//        String transactionId = transactionsList.get(0).getTransactionId();
-//
-//        return transactionId;
-//    }
+    public List<String> getTransactions(int bookId,int cardId){
+
+        List<Transaction> transactionsList = transactionRepository.getTransactionsForBookAndCard(bookId,cardId);
+
+        List<String > trans = new ArrayList<>();
+        for(Transaction transaction : transactionsList){
+            trans.add(transaction.getTransactionDate()+"");
+        }
+
+        String transactionId = transactionsList.get(0).getTransactionId();
+
+        return trans;
+    }
 
 
 }
