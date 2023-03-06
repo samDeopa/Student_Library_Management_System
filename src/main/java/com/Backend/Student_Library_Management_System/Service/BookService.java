@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,5 +36,14 @@ public class BookService {
         authorRepository.save(author);
 
         return  "Book added successfully";
+    }
+
+    public List<String> getAllBooks() {
+        List<Book> bookList = bookRepository.findAll();
+        List<String> books = new ArrayList<>();
+        for (Book book:bookList){
+            books.add( book.getId() +" : "+ book.getName()  );
+        }
+        return books;
     }
 }

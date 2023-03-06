@@ -19,4 +19,13 @@ public class AuthorService {
         authorRepository.save(author);
         return  "Author added successfully";
     }
+
+    public List<String> getAllAuthors() {
+        List<Author> authorList = authorRepository.findAll();
+        List<String> authors = new ArrayList<>();
+        for (Author author:authorList){
+            authors.add( author.getId() +" : "+ author.getName()  );
+        }
+        return authors;
+    }
 }
